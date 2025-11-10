@@ -1,9 +1,7 @@
 import headshot from "./assets/professional-photo.jpg";
 
 function Introduction() {
-  useEffect(() => {
     document.title = "ITIS3135 | Introduction";
-  }, []);
 
     return (
       <main>

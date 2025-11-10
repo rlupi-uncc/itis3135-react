@@ -1,7 +1,5 @@
 function Home() {
-  useEffect(() => {
     document.title = "ITIS3135 | Home";
-  }, []);
     return (
       <main>
         <h2>Home</h2>

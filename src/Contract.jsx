@@ -1,7 +1,5 @@
 function Contract() {
-  useEffect(() => {
     document.title = "ITIS3135 | Contract";
-  }, []);
     return (
       <main>
         <h2>Contract</h2>
