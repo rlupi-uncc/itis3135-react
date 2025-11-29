@@ -7,7 +7,7 @@ function Header() {
       <nav className="primary-nav">
         <Link to="/">ITIS3135</Link> |
         <Link to="/contract">Contract</Link> |
-        <Link to="/introduction">Introduction</Link>
+        <Link to="/introduction">Introduction</Link> |
         <Link to="/introductions">Introductions</Link>
       </nav>
     </header>
