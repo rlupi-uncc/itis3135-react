@@ -20,11 +20,10 @@ function Introductions() {
   const [showQuote, setShowQuote] = useState(true);
   const [showLinks, setShowLinks] = useState(true);
 
-  // Slideshow state
+  // Slideshow
   const [slideshow, setSlideshow] = useState(false);
   const [slideIndex, setSlideIndex] = useState(0);
 
-  // Load data
   useEffect(() => {
     document.title = "ITIS3135 | Introductions";
 
@@ -44,7 +43,7 @@ function Introductions() {
       });
   }, []);
 
-  // Apply search filter
+  // Update filtered list when searching
   useEffect(() => {
     const result = students.filter((s) => {
       const fullName = `${s.name.first} ${s.name.middleInitial ?? ""} ${s.name.last}`;
@@ -55,7 +54,6 @@ function Introductions() {
     setSlideIndex(0);
   }, [nameSearch, students]);
 
-  // Helper for slideshow navigation
   const nextSlide = () => {
     setSlideIndex((i) => (i + 1) % filteredStudents.length);
   };
@@ -66,7 +64,7 @@ function Introductions() {
     );
   };
 
-  // Render card
+  // Render a single student card
   const renderStudent = (s, index) => (
     <article className="intro-card" key={index}>
       {/* IMAGE */}
@@ -79,15 +77,23 @@ function Introductions() {
       )}
 
       <div className="intro-content">
-        {/* NAME */}
-        {showName && (
-          <h3>
-            {s.name.first}{" "}
-            {s.name.middleInitial && s.name.middleInitial + ". "} 
-            {s.name.last}
-            {showMascot && s.mascot && ` — ${s.mascot}`}
-          </h3>
-        )}
+        {/* FIXED NAME + MASCOT LOGIC */}
+        <h3>
+          {/* Name */}
+          {showName && (
+            <>
+              {s.name.first}{" "}
+              {s.name.middleInitial && s.name.middleInitial + ". "}
+              {s.name.last}
+            </>
+          )}
+
+          {/* Divider appears only when both name & mascot are showing */}
+          {showName && showMascot && s.divider && ` ${s.divider} `}
+
+          {/* Mascot */}
+          {showMascot && s.mascot}
+        </h3>
 
         {/* PERSONAL STATEMENT */}
         {showPersonal && <p>{s.personalStatement}</p>}
@@ -102,7 +108,7 @@ function Introductions() {
           </ul>
         )}
 
-        {/* COURSES */}
+        {/* CLASSES */}
         {showClasses && (
           <div className="intro-courses">
             {s.courses.map((c, i) => (
@@ -147,9 +153,9 @@ function Introductions() {
       {loading && <p>Loading students...</p>}
       {error && <p style={{ color: "red" }}>Error: {error}</p>}
 
-      {/* SEARCH */}
+      {/* SEARCH BAR */}
       <label>
-        Search Students:&nbsp;
+        Search:&nbsp;
         <input
           type="text"
           value={nameSearch}
@@ -158,11 +164,9 @@ function Introductions() {
       </label>
 
       {/* COUNT */}
-      <p>
-        <strong>Found {filteredStudents.length} Introductions</strong>
-      </p>
+      <p><strong>Found {filteredStudents.length} Introductions</strong></p>
 
-      {/* CHECKBOX FILTERS */}
+      {/* FILTER CHECKBOXES */}
       <section className="filters">
         <h3>Display Options</h3>
 
@@ -176,7 +180,6 @@ function Introductions() {
         <label><input type="checkbox" checked={showQuote} onChange={() => setShowQuote(!showQuote)} /> Quote</label><br/>
         <label><input type="checkbox" checked={showLinks} onChange={() => setShowLinks(!showLinks)} /> Links</label><br/>
 
-        {/* Slideshow toggle */}
         <button onClick={() => setSlideshow(!slideshow)}>
           {slideshow ? "Show All" : "Start Slideshow"}
         </button>
